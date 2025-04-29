@@ -12,8 +12,13 @@ interface Props {
   };
 }
 
+// 👇 Add this to define dynamic form structure
+type DynamicFormValues = {
+  [key: string]: any;
+};
+
 export default function DynamicForm({ form }: Props) {
-  const methods = useForm({ mode: "onTouched" });
+  const methods = useForm<DynamicFormValues>({ mode: "onTouched" }); // 👈 Add type
   const [currentSection, setCurrentSection] = useState(0);
   const [submitted, setSubmitted] = useState(false);
 
@@ -27,14 +32,13 @@ export default function DynamicForm({ form }: Props) {
 
   const handlePrev = () => setCurrentSection((prev) => prev - 1);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: DynamicFormValues) => {
     setSubmitted(true);
     console.log("✅ Form Submitted:", data);
     alert("Form submitted! Check console for output.");
   };
 
   return (
-    // @ts-ignore
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
         <h2 style={{ marginBottom: "10px" }}>{form.formTitle}</h2>

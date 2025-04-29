@@ -34,6 +34,7 @@ export default function DynamicForm({ form }: Props) {
   };
 
   return (
+    // @ts-ignore
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
         <h2 style={{ marginBottom: "10px" }}>{form.formTitle}</h2>
